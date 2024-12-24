@@ -1,11 +1,13 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import { AppRoutes } from "./routes"; // Import the generic routing entry
+// src/App.tsx
+import React from "react";
+import { AppRoutes } from "./routes"; // Ensure this is the correct path
 
-export function App() {
+const App = () => {
   return (
-    <Router>
-      <AppRoutes /> {/* Use the consolidated routes */}
-    </Router>
+    <div>
+      <AppRoutes /> {/* Do not wrap in Router here */}
+    </div>
   );
-}
+};
 
+export default App;
