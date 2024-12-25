@@ -1,11 +1,11 @@
 // src/App.tsx
 import React from "react";
-import { AppRoutes } from "./routes"; // Ensure this is the correct path
+import { AppRoutes } from "./routes";
 
 const App = () => {
   return (
     <div>
-      <AppRoutes /> {/* Do not wrap in Router here */}
+      <AppRoutes />
     </div>
   );
 };

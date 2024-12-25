@@ -8,34 +8,26 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-white text-2xl font-semibold">
+    <nav className="bg-white p-4">
+      <div className="container mx-auto flex justify-between items-center no-underline">
+        <Link to="/" className="text-black text-2xl font-semibold">
           RestApi
         </Link>
 
         <div className="hidden md:flex space-x-4">
-          <Link to="/" className="text-white hover:text-gray-400">
+          <Link to="/" className="text-black hover:text-gray-400">
             Home
           </Link>
-          <Link to="/about" className="text-white hover:text-gray-400">
-            About
-          </Link>
-          <Link to="/services" className="text-white hover:text-gray-400">
-            Services
-          </Link>
-          <Link to="/contact" className="text-white hover:text-gray-400">
-            Contact
-          </Link>
+
           {isLoggedIn ? (
             <div>
-              <button onClick={logout} className="text-white">
+              <button onClick={logout} className="text-black">
                 Logout
               </button>
             </div>
           ) : (
             <div>
-              <Link to="/login" className="text-white">
+              <Link to="/login" className="text-black">
                 Log in
               </Link>
             </div>
@@ -68,15 +60,6 @@ export const Navbar = () => {
       >
         <Link to="/" className="block hover:text-gray-400">
           Home
-        </Link>
-        <Link to="/about" className="block hover:text-gray-400">
-          About
-        </Link>
-        <Link to="/services" className="block hover:text-gray-400">
-          Services
-        </Link>
-        <Link to="/contact" className="block hover:text-gray-400">
-          Contact
         </Link>
         {isLoggedIn ? (
           <div>

@@ -62,47 +62,90 @@ export const Login = () => {
 
   return (
     <>
-      <div>
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Email or Username</label>
-            <input
-              type="text"
-              value={emailOrUsername}
-              onChange={(e) => {
-                setEmailOrUsername(e.target.value);
-                handleFieldChange("EmailOrUsername");
-              }}
-            />
-            {errorMessages.EmailOrUsername && (
-              <div className="error">{errorMessages.EmailOrUsername}</div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="card w-full max-w-sm shadow-xl">
+          <div className="card-body">
+            <h2 className="text-2xl font-bold text-center mb-4 text-black">
+              Login
+            </h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-control mb-4">
+                <label className="label">
+                  <span className="label-text text-black">
+                    Email or Username
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter your email"
+                  className="input input-bordered bg-white text-black"
+                  value={emailOrUsername}
+                  onChange={(e) => {
+                    setEmailOrUsername(e.target.value);
+                    handleFieldChange("EmailOrUsername");
+                  }}
+                />
+                {errorMessages.EmailOrUsername && (
+                  <div className="error text-red-800">
+                    {errorMessages.EmailOrUsername}
+                  </div>
+                )}
+              </div>
+
+              <div className="form-control mb-4">
+                <label className="label">
+                  <span className="label-text text-black">Password</span>
+                </label>
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  className="input input-bordered bg-white text-black"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    handleFieldChange("Password");
+                  }}
+                />
+                {errorMessages.Password && (
+                  <div className="error text-red-800">
+                    {errorMessages.Password}
+                  </div>
+                )}
+              </div>
+
+              <div className="form-control mt-4">
+                <button type="submit" className="btn btn-primary">
+                  Login
+                </button>
+              </div>
+            </form>
+
+            {responseMessage && <div>{responseMessage}</div>}
+
+            {errorMessages.credentials && (
+              <div className="error text-red-800">
+                {errorMessages.credentials}
+              </div>
             )}
+            <div className="divider">OR</div>
+            <div className="flex flex-col gap-2">
+              <button className="btn btn-outline btn-accent">
+                Login with Google
+              </button>
+              <button className="btn btn-outline btn-info">
+                Login with Facebook
+              </button>
+            </div>
+
+            {/* Sign Up Redirect */}
+            <p className="text-center mt-4 text-sm">
+              Don’t have an account?{" "}
+              <Link to="/register" className="text-primary hover:underline">
+                Sign Up
+              </Link>
+            </p>
           </div>
-
-          <div>
-            <label>Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                handleFieldChange("Password");
-              }}
-            />
-            {errorMessages.Password && (
-              <div className="error">{errorMessages.Password}</div>
-            )}
-          </div>
-
-          <button type="submit">Login</button>
-        </form>
-
-        {responseMessage && <div>{responseMessage}</div>}
-
-        {errorMessages.credentials && (
-          <div className="error">{errorMessages.credentials}</div>
-        )}
+        </div>
       </div>
     </>
   );
