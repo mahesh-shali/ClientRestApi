@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTitle } from "../hooks/useTitle";
 import { Navbar } from "../components/Navbar";
 
 export const Home: React.FC = () => {
   useTitle("Home");
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
 
   return (
     <div>
-      <Navbar />
+      <Navbar toggleSidebar={toggleSidebar} />
       <div className="container flex flex-col bg-white mx-auto px-4 py-8">
         <section className="flex flex-col md:flex-row items-center justify-between p-6 rounded-lg shadow-lg mb-8">
           <div className="md:w-1/2 p-4 text-black">
