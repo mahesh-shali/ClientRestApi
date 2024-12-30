@@ -4,47 +4,51 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import icon from "../assets/images/icon.png";
 import { faUser } from "@fortawesome/free-light-svg-icons";
 
-export const Navbar = ({ toggleSidebar }) => {
+export const Navbar = ({ isSidebarVisible, toggleSidebar }) => {
   const { user, isLoggedIn, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <nav className="bg-white p-4">
+      <nav className="bg-white p-4 shadow-lg">
         <div className=" mx-auto flex justify-between items-center no-underline">
-          <div className="flex items-center">
-            <Link
-              to="/"
-              className="text-black text-2xl flex items-center font-semibold"
-            >
-              RestApi
-            </Link>
-            {isLoggedIn &&
-              (() => {
-                const location = useLocation();
-                if (location.pathname !== "/") {
-                  return (
-                    <div className="ml-28 text-black cursor-pointer">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        onClick={toggleSidebar}
-                        strokeLinejoin="round"
-                      >
-                        <path d="M4 6h16M4 12h16M4 18h16"></path>
-                      </svg>
-                    </div>
-                  );
-                }
-                return null; // Do not render anything if the path is "/"
-              })()}
+          <div className="flex items-center w-[14rem] justify-between">
+            <div className="flex items-center">
+              <img src={icon} alt="logo" style={{ width: 40 }} />
+              <Link to="/" className="text-black text-2xl ml-2 font-semibold">
+                Rove
+              </Link>
+            </div>
+
+            <div>
+              {isLoggedIn &&
+                (() => {
+                  const location = useLocation();
+                  if (location.pathname !== "/") {
+                    return (
+                      <div className="ml-28 text-black cursor-pointer hidden md:block">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          onClick={toggleSidebar}
+                          strokeLinejoin="round"
+                        >
+                          <path d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                      </div>
+                    );
+                  }
+                  return null; // Do not render anything if the path is "/"
+                })()}
+            </div>
           </div>
 
           <div className="hidden md:flex space-x-4">
@@ -135,10 +139,26 @@ export const Navbar = ({ toggleSidebar }) => {
                 </div>
               </div>
             ) : (
-              <div>
-                <Link to="/login" className="text-black">
-                  Log in
+              <div className="flex space-x-4 items-center">
+                <Link to="" className="block text-black hover:text-gray-600">
+                  About
                 </Link>
+                <Link to="" className="block text-black hover:text-gray-600">
+                  Team
+                </Link>
+                <Link to="" className="block text-black hover:text-gray-600">
+                  Contact Us
+                </Link>
+                <button className="rounded-full bg-white flex items-center">
+                  <Link to="/register" className="text-black">
+                    Get Started
+                  </Link>
+                </button>
+                <button className="flex items-center rounded-full bg-white border border-green-200 hover:border-green-200 hover:bg-green-500 hover:text-white">
+                  <Link to="/login" className="text-inherit">
+                    Sign In
+                  </Link>
+                </button>
               </div>
             )}
           </div>

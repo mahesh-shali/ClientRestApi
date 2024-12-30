@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTitle } from "../hooks/useTitle";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { getIpAddress, getOsName, getBrowserInfo } from "@/utils/statics";
 
 export const Login = () => {
   useTitle("Login");
@@ -31,9 +32,27 @@ export const Login = () => {
         localStorage.setItem("user", JSON.stringify(response.data.user));
         localStorage.setItem("tokenExpiration", response.data.expiration);
 
+        // Get device info after successful login
+        const ip = await getIpAddress();
+        const userAgent = navigator.userAgent;
+        const platform = navigator.platform;
+        const browserInfo = getBrowserInfo(userAgent);
+        const osName = getOsName(platform);
+
+        const deviceDetails = {
+          ip,
+          browser: browserInfo.browserName,
+          browserVersion: browserInfo.browserVersion,
+          os: osName,
+        };
+
+        // Store device info in localStorage
+        localStorage.setItem("device", JSON.stringify(deviceDetails));
+
         setResponseMessage("Login successful!");
         setErrorMessages({});
 
+        // Redirect user based on their role
         if (response.data.user.role === "admin") {
           navigate("/admin/dashboard");
         } else {

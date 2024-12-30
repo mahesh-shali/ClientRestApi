@@ -1,8 +1,8 @@
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-export const AdminSettings = () => {
+export const UserRights = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   const toggleSidebar = () => {
@@ -29,7 +29,9 @@ export const AdminSettings = () => {
           <div className=" flex-grow p-6 bg-gray-100 overflow-auto scrollbar-hide rounded-3xl">
             <div className="flex flex-col">
               <div className="max-h-full">
-                <h1 className="text-2xl font-bold">Welcome to the Settings!</h1>
+                <h1 className="text-2xl font-bold">
+                  Welcome to the Dashboard!
+                </h1>
                 <p className="mt-4">Select an option from the sidebar.</p>
 
                 {/* Add more content here to see scrolling */}

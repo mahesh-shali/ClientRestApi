@@ -26,13 +26,13 @@ const ForceReload = () => {
       sessionStorage.setItem("reloadCount", (reloadCount + 1).toString());
       setTimeout(() => {
         window.location.reload();
-      }, 1000); // 1-second delay for reload
+      }, 1000);
     } else {
-      sessionStorage.removeItem("reloadCount"); // Reset after two reloads
+      sessionStorage.removeItem("reloadCount");
     }
   }, []);
 
-  return null; // Prevent rendering during reload
+  return null;
 };
 
 // Delay before rendering NotFound page
@@ -42,7 +42,7 @@ const DelayedNotFound = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowNotFound(true);
-    }, 2000); // 1-second delay before showing NotFound
+    }, 2000);
 
     return () => clearTimeout(timeout);
   }, []);
