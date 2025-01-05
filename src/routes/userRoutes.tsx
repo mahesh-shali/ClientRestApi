@@ -1,5 +1,4 @@
 // src/routes/userRoutes.tsx
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { UserDashboard } from "../pages/User/UserDashboard"; // User Dashboard
 import { NotFound } from "@/pages/NotFound";

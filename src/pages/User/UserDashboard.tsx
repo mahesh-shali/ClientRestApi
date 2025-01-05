@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const UserDashboard = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
@@ -12,7 +12,10 @@ export const UserDashboard = () => {
     <>
       <div className="bg-white h-screen flex flex-col">
         {/* Navbar */}
-        <Navbar toggleSidebar={toggleSidebar} />
+        <Navbar
+          toggleSidebar={toggleSidebar}
+          isSidebarVisible={isSidebarVisible}
+        />
 
         {/* Main Content */}
         <div className="flex flex-grow overflow-hidden">

@@ -1,5 +1,5 @@
 // src/pages/UnauthorizedPage.tsx
-import React from "react";
+// import React from "react";
 
 export const UnauthorizedPage = () => {
   return (

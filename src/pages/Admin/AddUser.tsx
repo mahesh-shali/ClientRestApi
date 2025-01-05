@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const AddUser = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);

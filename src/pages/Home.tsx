@@ -13,7 +13,10 @@ export const Home: React.FC = () => {
   return (
     <div className="h-screen flex flex-col bg-white overflow-hidden">
       {/* Navbar with Scrollbar */}
-      <Navbar toggleSidebar={toggleSidebar} isSidebarVisible={undefined} />
+      <Navbar
+        toggleSidebar={toggleSidebar}
+        isSidebarVisible={isSidebarVisible}
+      />
 
       {/* Main Content */}
       <div className="flex-grow overflow-auto pt-16 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent scrollbar-thumb-rounded-md">

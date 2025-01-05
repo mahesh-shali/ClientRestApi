@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { mainMenu, logoMap } from "../utils/statics";
@@ -9,10 +9,14 @@ export const Sidebar = () => {
   const location = useLocation();
 
   // State for active menus
-  const [activeIndex, setActiveIndex] = useState(null);
-  const [activeSubmenuIndex, setActiveSubmenuIndex] = useState(null);
-  const [activeNestedSubmenuIndex, setActiveNestedSubmenuIndex] =
-    useState(null);
+  const [activeIndex, setActiveIndex] = useState<string | null>(null);
+
+  const [activeSubmenuIndex, setActiveSubmenuIndex] = useState<string | null>(
+    null
+  );
+  const [_activeNestedSubmenuIndex, setActiveNestedSubmenuIndex] = useState<
+    string | null
+  >(null);
 
   // Effect to set active menu based on route
   useEffect(() => {
@@ -38,20 +42,21 @@ export const Sidebar = () => {
   }, [location]);
 
   // Toggle main menu
-  const toggleMenu = (index) => {
+  const toggleMenu = (index: SetStateAction<string | null>) => {
     setActiveIndex(activeIndex === index ? null : index);
     setActiveSubmenuIndex(null);
     setActiveNestedSubmenuIndex(null);
   };
 
   // Toggle submenu
-  const toggleSubmenu = (index) => {
+  const toggleSubmenu = (index: SetStateAction<string | null>) => {
     setActiveSubmenuIndex(activeSubmenuIndex === index ? null : index);
     setActiveNestedSubmenuIndex(null);
   };
 
   // Utility to check active route
-  const isActiveRoute = (route) => location.pathname === route;
+  const isActiveRoute = (route: string | undefined) =>
+    location.pathname === route;
 
   return (
     <div className="w-64 text-base-content shadow-md flex flex-col h-[93vh]">
@@ -89,7 +94,11 @@ export const Sidebar = () => {
               onClick={() => toggleMenu(item.id)} // Toggle Main Menu
             >
               <span>
-                <FontAwesomeIcon icon={logoMap[item.logo]} />
+                {item.logo && (
+                  <FontAwesomeIcon
+                    icon={logoMap[item.logo as keyof typeof logoMap]}
+                  />
+                )}
               </span>
               {item.name}
             </div>
@@ -116,9 +125,9 @@ export const Sidebar = () => {
                         {submenu.submenus.map((nestedSubmenu) => (
                           <li key={nestedSubmenu.id}>
                             <Link
-                              to={nestedSubmenu.route}
+                              to={nestedSubmenu.route || "#"} // Fallback route
                               className={`${
-                                isActiveRoute(nestedSubmenu.route)
+                                isActiveRoute(nestedSubmenu.route || "#")
                                   ? "bg-blue-200 text-blue-800"
                                   : "hover:bg-blue-100"
                               } cursor-pointer text-black rounded-md p-2 m-1`}
