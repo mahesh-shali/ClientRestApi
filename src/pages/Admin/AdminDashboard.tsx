@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
-import { Line, Bar, Pie, Doughnut } from "react-chartjs-2";
+import { Line, Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,7 +14,12 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
-import { dashboardData, chartData, tableData } from "@/utils/statics";
+import {
+  dashboardData,
+  chartData,
+  tableData,
+  ChartData,
+} from "../../utils/statics";
 
 ChartJS.register(
   CategoryScale,
@@ -30,8 +35,8 @@ ChartJS.register(
 
 export const AdminDashboard = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-  const [cards, setCards] = useState([]);
-  const [charts, setCharts] = useState([]);
+  const [cards, setCards] = useState<any[]>([]);
+  const [charts, setCharts] = useState<ChartData[]>([]);
 
   useEffect(() => {
     setCharts(chartData);
@@ -109,8 +114,6 @@ export const AdminDashboard = () => {
                     ? Line
                     : chart.type === "bar"
                     ? Bar
-                    : chart.type === "pie"
-                    ? Pie
                     : chart.type === "doughnut"
                     ? Doughnut
                     : null;

@@ -1,4 +1,5 @@
 // src/contexts/AuthContext.tsx
+import axios from "axios";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -26,8 +27,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
     const tokenExpiration = localStorage.getItem("tokenExpiration");
+
+    let storedUser = {};
+
+    try {
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        storedUser = JSON.parse(userData);
+      }
+    } catch (error) {
+      console.error("Error parsing user data from localStorage:", error);
+    }
 
     if (token && storedUser && tokenExpiration) {
       const expirationTime = new Date(tokenExpiration).getTime();
@@ -37,25 +48,50 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(storedUser);
         setIsLoggedIn(true);
       } else {
+        localStorage.removeItem("device");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         localStorage.removeItem("tokenExpiration");
         setIsLoggedIn(false);
       }
     } else {
-      setIsLoggedIn(false); // If no token or user, log out
+      setIsLoggedIn(false);
     }
 
-    setLoading(false); // Set loading to false after authentication check
+    setLoading(false);
   }, []);
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("tokenExpiration");
-    setUser(null);
-    setIsLoggedIn(false);
-    navigate("/login");
+  const logout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.warn("No token found.");
+        return;
+      }
+
+      await axios.post(
+        "https://localhost:7158/api/Auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      localStorage.removeItem("device");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("tokenExpiration");
+      setUser(null);
+      setIsLoggedIn(false);
+      navigate("/login");
+    } catch (error: any) {
+      console.error(
+        "Logout failed:",
+        error.response?.data?.message || error.message
+      );
+    }
   };
 
   return (

@@ -12,7 +12,10 @@ export const UserProfile = () => {
     <>
       <div className="bg-white h-screen flex flex-col">
         {/* Navbar */}
-        <Navbar toggleSidebar={toggleSidebar} />
+        <Navbar
+          toggleSidebar={toggleSidebar}
+          isSidebarVisible={isSidebarVisible}
+        />
 
         {/* Main Content */}
         <div className="flex flex-grow overflow-hidden">

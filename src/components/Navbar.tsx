@@ -1,15 +1,22 @@
 // src/components/Navbar.tsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import icon from "../assets/images/icon.png";
-import { faUser } from "@fortawesome/free-light-svg-icons";
+// import { faUser } from "@fortawesome/free-light-svg-icons";
 
-export const Navbar = ({ isSidebarVisible, toggleSidebar }) => {
+interface NavbarProps {
+  toggleSidebar: () => void;
+  isSidebarVisible: boolean;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
+  //isSidebarVisible,
   const { user, isLoggedIn, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <>
@@ -26,7 +33,7 @@ export const Navbar = ({ isSidebarVisible, toggleSidebar }) => {
             <div>
               {isLoggedIn &&
                 (() => {
-                  const location = useLocation();
+                  // const location = useLocation();
                   if (location.pathname !== "/") {
                     return (
                       <div className="ml-28 text-black cursor-pointer hidden md:block">
@@ -54,7 +61,7 @@ export const Navbar = ({ isSidebarVisible, toggleSidebar }) => {
           <div className="hidden md:flex space-x-4">
             {user?.role === "admin" &&
               (() => {
-                const location = useLocation();
+                // const location = useLocation();
                 return (
                   <>
                     {location.pathname === "/" ? (
@@ -91,7 +98,7 @@ export const Navbar = ({ isSidebarVisible, toggleSidebar }) => {
 
             {user?.role === "user" &&
               (() => {
-                const location = useLocation();
+                // const location = useLocation();
                 return (
                   <>
                     {location.pathname === "/" ? (
@@ -189,7 +196,7 @@ export const Navbar = ({ isSidebarVisible, toggleSidebar }) => {
         >
           {user?.role === "admin" &&
             (() => {
-              const location = useLocation();
+              // const location = useLocation();
               return (
                 <>
                   {location.pathname === "/" ? (
@@ -226,7 +233,7 @@ export const Navbar = ({ isSidebarVisible, toggleSidebar }) => {
 
           {user?.role === "user" &&
             (() => {
-              const location = useLocation();
+              // const location = useLocation();
               return (
                 <>
                   {location.pathname === "/" ? (
