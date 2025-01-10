@@ -23,8 +23,6 @@ export default defineConfig(({ mode }) => {
       },
       host: env.VITE_SERVER_HOST || "localhost", // Host for the dev server
       port: parseInt(env.VITE_SERVER_PORT) || 5173, // Port for the dev server
-      host: env.VITE_SERVER_HOST || "localhost", // Host for the dev server
-      port: parseInt(env.VITE_SERVER_PORT) || 5173, // Port for the dev server
       hmr: {
         protocol: "ws", // Use WebSocket for HMR
         host: env.VITE_HMR_HOST || "localhost",
@@ -33,8 +31,6 @@ export default defineConfig(({ mode }) => {
       historyApiFallback: true, // Handle SPA routing
     },
     preview: {
-      host: env.VITE_SERVER_HOST || "localhost", // Preview host
-      port: parseInt(env.VITE_SERVER_PORT) || 4173, // Preview port
       host: env.VITE_SERVER_HOST || "localhost", // Preview host
       port: parseInt(env.VITE_SERVER_PORT) || 4173, // Preview port
     },
