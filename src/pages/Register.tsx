@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getIpAddress, getBrowserInfo, getOsName } from "../utils/statics";
 import axios from "axios";
-import dotenv from "dotenv";
-dotenv.config();
 
 export const Register = () => {
   useTitle("Register");
@@ -155,7 +153,7 @@ export const Register = () => {
       };
 
       const response = await axios.post(
-        `${process.env.SERVER_API_URL}/api/Auth/register`,
+        `${import.meta.env.VITE_SERVER_API_URL}/api/Auth/register`,
         {
           name,
           email,
