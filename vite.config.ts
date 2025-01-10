@@ -3,7 +3,8 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import fs from "fs";
 
-export default defineConfig(({ mode }) => {
+// Ensure TypeScript recognizes the returned configuration
+export default defineConfig(({ mode }: { mode: string }) => {
   // Load environment variables
   const env = loadEnv(mode, process.cwd());
 
@@ -11,7 +12,7 @@ export default defineConfig(({ mode }) => {
   const isProduction = mode === "production";
 
   // HTTPS options for local development
-  const httpsOptions = !isProduction
+  const httpsOptions: boolean | { key: Buffer; cert: Buffer } = !isProduction
     ? {
         key: fs.readFileSync(env.VITE_SSL_KEY || "./cert/key.pem"),
         cert: fs.readFileSync(env.VITE_SSL_CERT || "./cert/cert.pem"),
