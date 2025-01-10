@@ -30,9 +30,12 @@ export default defineConfig(({ mode }) => {
       fs: {
         allow: [".."], // Allow the server to serve files from the parent directory
       },
-      https: httpsOptions, // Enable HTTPS if configured
-      host: env.VITE_SERVER_HOST || "localhost", // Use the host from .env
-      port: parseInt(env.VITE_SERVER_PORT) || 5173, // Use the port from .env
+      // https: {
+      //   key: fs.readFileSync(env.VITE_SSL_KEY || "./cert/key.pem"),
+      //   cert: fs.readFileSync(env.VITE_SSL_CERT || "./cert/cert.pem"),
+      // },
+      host: env.VITE_SERVER_HOST || "localhost", //for production ip or domain
+      port: parseInt(env.VITE_SERVER_PORT) || 5173, //port that of the ip or domain
       hmr: {
         protocol: env.VITE_HMR_PROTOCOL || "ws", // Use HMR protocol from .env
         host: env.VITE_HMR_HOST || "localhost", // Use HMR host from .env
@@ -41,9 +44,13 @@ export default defineConfig(({ mode }) => {
       historyApiFallback: true, // Handle SPA routing
     },
     preview: {
-      host: env.VITE_SERVER_HOST || "localhost",
-      port: parseInt(env.VITE_SERVER_PORT) || 4173,
-      https: httpsOptions, // Enable HTTPS if configured
+      // Preview configuration (this will run after `vite build` and `vite preview`)
+      // https: {
+      //   key: fs.readFileSync(env.VITE_SSL_KEY || "./cert/key.pem"),
+      //   cert: fs.readFileSync(env.VITE_SSL_CERT || "./cert/cert.pem"),
+      // },
+      host: env.VITE_SERVER_HOST || "localhost", // Preview host
+      port: parseInt(env.VITE_SERVER_PORT) || 4173, // Preview port
     },
   };
 });
