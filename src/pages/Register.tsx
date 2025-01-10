@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getIpAddress, getBrowserInfo, getOsName } from "../utils/statics";
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const Register = () => {
   useTitle("Register");

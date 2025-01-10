@@ -13,10 +13,6 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "src"),
       },
     },
-    define: {
-      // Inject environment variables into the client code
-      "process.env.SERVER_API_URL": JSON.stringify(env.SERVER_API_URL),
-    },
     server: {
       fs: {
         allow: [".."], // Allow the server to serve files from the parent directory
