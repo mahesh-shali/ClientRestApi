@@ -153,7 +153,7 @@ export const Register = () => {
       };
 
       const response = await axios.post(
-        `${process.env.SERVER_API_URL}/Auth/register`,
+        `${process.env.SERVER_API_URL}/api/Auth/register`,
         {
           name,
           email,
