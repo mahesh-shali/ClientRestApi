@@ -3,21 +3,21 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import fs from "fs";
 
-// Ensure TypeScript recognizes the returned configuration
-export default defineConfig(({ mode }: { mode: string }) => {
+export default defineConfig(({ mode }) => {
   // Load environment variables
   const env = loadEnv(mode, process.cwd());
 
-  // Determine if we're in production
-  const isProduction = mode === "production";
+  // Determine if HTTPS is enabled
+  const isHttps = env.VITE_SERVER_PROTOCOL === "https";
 
-  // HTTPS options for local development
-  const httpsOptions: boolean | { key: Buffer; cert: Buffer } = !isProduction
-    ? {
-        key: fs.readFileSync(env.VITE_SSL_KEY || "./cert/key.pem"),
-        cert: fs.readFileSync(env.VITE_SSL_CERT || "./cert/cert.pem"),
-      }
-    : false;
+  // HTTPS options for development
+  const httpsOptions =
+    isHttps && env.VITE_SSL_KEY && env.VITE_SSL_CERT
+      ? {
+          key: fs.readFileSync(env.VITE_SSL_KEY),
+          cert: fs.readFileSync(env.VITE_SSL_CERT),
+        }
+      : false;
 
   return {
     plugins: [react()],
@@ -30,21 +30,20 @@ export default defineConfig(({ mode }: { mode: string }) => {
       fs: {
         allow: [".."], // Allow the server to serve files from the parent directory
       },
-      https: httpsOptions, // Only enable HTTPS for local development
-      host: env.VITE_SERVER_HOST || "localhost", // Host for local development
-      port: parseInt(env.VITE_SERVER_PORT) || 5173, // Port for local development
+      https: httpsOptions, // Enable HTTPS if configured
+      host: env.VITE_SERVER_HOST || "localhost", // Use the host from .env
+      port: parseInt(env.VITE_SERVER_PORT) || 5173, // Use the port from .env
       hmr: {
-        protocol: isProduction ? "wss" : "ws", // Use `wss` in production for secure connections
-        host: env.VITE_HMR_HOST || "localhost",
-        port: parseInt(env.VITE_HMR_PORT) || (isProduction ? 443 : 5173),
+        protocol: env.VITE_HMR_PROTOCOL || "ws", // Use HMR protocol from .env
+        host: env.VITE_HMR_HOST || "localhost", // Use HMR host from .env
+        port: parseInt(env.VITE_HMR_PORT) || 5173, // Use HMR port from .env
       },
       historyApiFallback: true, // Handle SPA routing
     },
     preview: {
-      // Preview server configuration (after `vite build`)
       host: env.VITE_SERVER_HOST || "localhost",
       port: parseInt(env.VITE_SERVER_PORT) || 4173,
-      https: httpsOptions, // Only enable HTTPS for local preview
+      https: httpsOptions, // Enable HTTPS if configured
     },
   };
 });
