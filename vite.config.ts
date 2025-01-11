@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    build: {
+      outDir: "dist",
+    },
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),
