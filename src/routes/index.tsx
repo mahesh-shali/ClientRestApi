@@ -11,8 +11,8 @@ import { Login } from "../pages/Login";
 import { UnauthorizedPage } from "../pages/UnauthorizedPage";
 import { Home } from "../pages/Home";
 import { NotFound } from "../pages/NotFound";
-import { Register } from "@/pages/Register";
-import Preloading from "@/contexts/Preloading";
+import { Register } from "../../src/pages/Register";
+import Preloading from "../contexts/Preloading";
 
 // Wrapper to force reload twice before showing NotFound
 const ForceReload = () => {
@@ -63,10 +63,10 @@ export const AppRoutes = () => {
 
       {/* Role-Based Routes */}
       {user?.role === "admin" && (
-        <Route path="admin/*" element={<AdminRoutes />} />
+        <Route path="/admin/*" element={<AdminRoutes />} />
       )}
       {user?.role === "user" && (
-        <Route path="user/*" element={<UserRoutes />} />
+        <Route path="/user/*" element={<UserRoutes />} />
       )}
 
       {/* Fallback for unknown routes */}
