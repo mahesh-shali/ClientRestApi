@@ -195,32 +195,32 @@ export const Register = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = `${
-      import.meta.env.VITE_SERVER_API_URL
-    }/api/Auth/login-google`;
-  };
+  // const handleGoogleLogin = () => {
+  //   window.location.href = `${
+  //     import.meta.env.VITE_SERVER_API_URL
+  //   }/api/Auth/login-google`;
+  // };
 
-  useEffect(() => {
-    const fetchGoogleCallback = async () => {
-      try {
-        // No need for this GET request to the callback URL, it's handled by Google redirection
-        const token = localStorage.getItem("token");
-        if (token) {
-          console.log("Login Successful:", token);
-          localStorage.setItem("token", token); // Store token in localStorage or sessionStorage
-          navigate("/user/dashboard"); // Redirect to dashboard or a desired route
-        } else {
-          navigate("/register");
-        }
-      } catch (error) {
-        console.error("Error during Google Callback:", error);
-        navigate("/register");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchGoogleCallback = async () => {
+  //     try {
+  //       // No need for this GET request to the callback URL, it's handled by Google redirection
+  //       const token = localStorage.getItem("token");
+  //       if (token) {
+  //         console.log("Login Successful:", token);
+  //         localStorage.setItem("token", token); // Store token in localStorage or sessionStorage
+  //         navigate("/user/dashboard"); // Redirect to dashboard or a desired route
+  //       } else {
+  //         navigate("/register");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error during Google Callback:", error);
+  //       navigate("/register");
+  //     }
+  //   };
 
-    fetchGoogleCallback();
-  }, [navigate]);
+  //   fetchGoogleCallback();
+  // }, [navigate]);
 
   const handleFieldChange = (field: string) => {
     setErrorMessages((prevErrors: any) => ({
