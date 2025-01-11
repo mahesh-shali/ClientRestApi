@@ -435,7 +435,7 @@ export const Register = () => {
           <div className="divider">OR</div>
 
           {/* Social Register Buttons */}
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2">
             <button
               onClick={handleGoogleLogin}
               className="btn btn-outline btn-accent"
@@ -445,7 +445,7 @@ export const Register = () => {
             <button className="btn btn-outline btn-info">
               Register with Facebook
             </button>
-          </div>
+          </div> */}
 
           {/* Login Redirect */}
           <p className="text-center mt-4 text-sm">
