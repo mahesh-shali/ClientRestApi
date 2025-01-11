@@ -34,7 +34,7 @@ export const Login = () => {
       };
 
       const response = await axios.post(
-        "https://localhost:7158/api/Auth/login",
+        `${import.meta.env.VITE_SERVER_API_URL}/api/Auth/login`,
         {
           emailOrUsername,
           password,

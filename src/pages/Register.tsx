@@ -196,7 +196,9 @@ export const Register = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5151/api/Auth/login-google";
+    window.location.href = `${
+      import.meta.env.VITE_SERVER_API_URL
+    }/api/Auth/login-google`;
   };
 
   useEffect(() => {
