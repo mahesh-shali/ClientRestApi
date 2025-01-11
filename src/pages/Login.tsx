@@ -150,7 +150,7 @@ export const Login = () => {
                 {errorMessages.credentials}
               </div>
             )}
-            <div className="divider">OR</div>
+            {/* <div className="divider">OR</div>
             <div className="flex flex-col gap-2">
               <button className="btn btn-outline btn-accent">
                 Login with Google
@@ -158,7 +158,7 @@ export const Login = () => {
               <button className="btn btn-outline btn-info">
                 Login with Facebook
               </button>
-            </div>
+            </div> */}
 
             {/* Sign Up Redirect */}
             <p className="text-center mt-4 text-sm">
