@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     build: {
-      outDir: "dist",
+      target: "esnext",
     },
     resolve: {
       alias: {
