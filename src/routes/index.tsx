@@ -15,25 +15,25 @@ import { Register } from "@/pages/Register";
 import Preloading from "@/contexts/Preloading";
 
 // Wrapper to force reload twice before showing NotFound
-// const ForceReload = () => {
-//   useEffect(() => {
-//     const reloadCount = parseInt(
-//       sessionStorage.getItem("reloadCount") || "0",
-//       10
-//     );
+const ForceReload = () => {
+  useEffect(() => {
+    const reloadCount = parseInt(
+      sessionStorage.getItem("reloadCount") || "0",
+      10
+    );
 
-//     if (reloadCount < 2) {
-//       sessionStorage.setItem("reloadCount", (reloadCount + 1).toString());
-//       setTimeout(() => {
-//         window.location.reload();
-//       }, 1000);
-//     } else {
-//       sessionStorage.removeItem("reloadCount");
-//     }
-//   }, []);
+    if (reloadCount < 2) {
+      sessionStorage.setItem("reloadCount", (reloadCount + 1).toString());
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } else {
+      sessionStorage.removeItem("reloadCount");
+    }
+  }, []);
 
-//   return null;
-// };
+  return null;
+};
 
 // Delay before rendering NotFound page
 const DelayedNotFound = () => {
@@ -74,7 +74,7 @@ export const AppRoutes = () => {
         path="*"
         element={
           <>
-            {/* <ForceReload /> */}
+            <ForceReload />
             <DelayedNotFound />
           </>
         }
