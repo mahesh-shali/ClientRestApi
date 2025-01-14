@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
+import { useAuth } from "../../hooks/useAuth";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -20,6 +21,8 @@ import {
   tableData,
   ChartData,
 } from "../../utils/statics";
+import axios from "axios";
+import Preloading from "@/contexts/Preloading";
 
 ChartJS.register(
   CategoryScale,
@@ -33,8 +36,22 @@ ChartJS.register(
   ArcElement
 );
 
+interface User {
+  userId: number;
+  userName: string;
+  userEmail: string;
+}
+
+interface Organization {
+  organizationId: number;
+  organizationName: string;
+  users: User[];
+}
+
 export const AdminDashboard = () => {
+  const { user } = useAuth();
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [organization, setOrganization] = useState<Organization | null>(null);
   const [cards, setCards] = useState<any[]>([]);
   const [charts, setCharts] = useState<ChartData[]>([]);
 
@@ -43,21 +60,41 @@ export const AdminDashboard = () => {
     setCards(dashboardData);
   }, []);
 
+  useEffect(() => {
+    const fetchOrganizationDetails = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${import.meta.env.VITE_DEV_SERVER_API_URL}/api/admin/organization/${
+            user.organizationId
+          }`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setOrganization(response.data);
+      } catch (err) {
+        console.log("Failed to fetch organization details.");
+      }
+    };
+
+    fetchOrganizationDetails();
+  }, [user.organizationId]);
+
   // Handle window resizing for sidebar auto toggle
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 1280) {
-        setIsSidebarVisible(false); // Auto-hide sidebar on smaller screens
+        setIsSidebarVisible(false);
       } else {
-        setIsSidebarVisible(true); // Show sidebar on larger screens
+        setIsSidebarVisible(true);
       }
     };
-
-    // Initialize resize listener
     handleResize();
     window.addEventListener("resize", handleResize);
-
-    // Cleanup resize listener
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -87,95 +124,26 @@ export const AdminDashboard = () => {
         {/* Main Content Area */}
         <div className="flex flex-grow p-6 bg-gray-100 overflow-auto scrollbar-hide rounded-3xl">
           <div className="flex-grow flex-col">
-            {/* Card Section */}
-            <div className="flex flex-wrap gap-2 m-4">
-              {cards.map((card) => (
-                <div
-                  key={card.id}
-                  className="card shadow-xl w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4" // Adjusted sizes for responsiveness
-                >
-                  <div className="card-body">
-                    <h2 className="card-title text-xl text-black">
-                      {card.title}
-                    </h2>
-                    <p className="text-3xl font-bold text-black">
-                      {card.value}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Chart Section */}
-            <div className="flex items-center">
-              {charts.map((chart) => {
-                const ChartComponent =
-                  chart.type === "line"
-                    ? Line
-                    : chart.type === "bar"
-                    ? Bar
-                    : chart.type === "doughnut"
-                    ? Doughnut
-                    : null;
-
-                const chartStyle =
-                  chart.type === "line" || chart.type === "bar"
-                    ? { width: "100%", height: "300px" }
-                    : { width: "300px", height: "300px" };
-
-                return (
-                  <div
-                    key={chart.id}
-                    className="card bg-white w-1/3 shadow-xl m-4 p-4"
-                  >
-                    <div className="card-body">
-                      {ChartComponent && (
-                        <div style={chartStyle}>
-                          <ChartComponent
-                            data={chart.data}
-                            options={chart.options}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Table Section */}
-            <div className="overflow-x-auto card bg-gray-50 shadow-md m-4 p-6">
-              <div className="card-body">
-                <table className="table table-md">
-                  <thead>
-                    <tr>
-                      {tableData.columns.map((column, index) => (
-                        <th key={index}>{column}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {tableData.rows.map((row) => (
-                      <tr key={row.id}>
-                        <th>{row.id}</th>
-                        <td>{row.name}</td>
-                        <td>{row.job}</td>
-                        <td>{row.company}</td>
-                        <td>{row.location}</td>
-                        <td>{row.lastLogin}</td>
-                        <td>{row.favoriteColor}</td>
-                      </tr>
+            <div>
+              <h1>Organization Details</h1>
+              {organization ? (
+                <div>
+                  <h2>{organization?.organizationName}</h2>
+                  <h3>Users:</h3>
+                  <ul>
+                    {organization.users.map((user) => (
+                      <li key={user.userId}>
+                        <strong>Name:</strong> {user.userName} |{" "}
+                        <strong>Email:</strong> {user.userEmail}
+                      </li>
                     ))}
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      {tableData.columns.map((column, index) => (
-                        <th key={index}>{column}</th>
-                      ))}
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
+                  </ul>
+                </div>
+              ) : (
+                <p>
+                  <Preloading />
+                </p>
+              )}
             </div>
           </div>
         </div>

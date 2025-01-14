@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       await axios.post(
-        `${import.meta.env.VITE_SERVER_API_URL}/api/Auth/logout`,
+        `${import.meta.env.VITE_DEV_SERVER_API_URL}/api/Auth/logout`,
         {},
         {
           headers: {

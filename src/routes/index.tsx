@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 // Import role-specific routes
 import { AdminRoutes } from "./adminRoutes";
 import { UserRoutes } from "./userRoutes";
+import { SuperAdminRoutes } from "./superAdminRoutes";
 
 // Import common pages
 import { Login } from "../pages/Login";
@@ -67,6 +68,9 @@ export const AppRoutes = () => {
       )}
       {user?.role === "user" && (
         <Route path="/user/*" element={<UserRoutes />} />
+      )}
+      {user?.role === "superAdmin" && (
+        <Route path="/superAdmin/*" element={<SuperAdminRoutes />} />
       )}
 
       {/* Fallback for unknown routes */}

@@ -59,8 +59,10 @@ export const Login = () => {
         // Redirect user based on their role
         if (response.data.user.role === "admin") {
           navigate("/admin/dashboard");
-        } else {
+        } else if (response.data.user.role === "user") {
           navigate("/user/dashboard");
+        } else {
+          navigate("/superAdmin/dashboard");
         }
       }
     } catch (error: any) {

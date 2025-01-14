@@ -30,6 +30,22 @@ export interface Menu {
   submenus?: Menu[];
 }
 
+export interface Menu1 {
+  id: string;
+  name: string;
+  logo?: string; // Make 'logo' optional for submenus
+  route?: string;
+  submenus?: Menu1[];
+}
+
+export interface Menu2 {
+  id: string;
+  name: string;
+  logo?: string; // Make 'logo' optional for submenus
+  route?: string;
+  submenus?: Menu2[];
+}
+
 export interface DashboardCard {
   id: number;
   bgColor: string;
@@ -157,12 +173,131 @@ export const mainMenu: Menu[] = [
         name: "Admin",
         route: "/master/admin",
         submenus: [
-          { id: "1-1-1", name: "User", route: "/admin/add-user/" },
+          {
+            id: "1-1-1",
+            name: "User",
+            route: "/superAdmin/create",
+          },
           { id: "1-1-2", name: "User Rights", route: "/admin/user-rights" },
         ],
       },
       {
         id: "1-2",
+        name: "Customers",
+        route: "/master/customers",
+        submenus: [
+          {
+            id: "1-2-1",
+            name: "Customer",
+          },
+          { id: "1-2-2", name: "Vendors" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "2",
+    name: "Inventory",
+    logo: "faBoxesStacked",
+    submenus: [
+      { id: "2-1", name: "Item", route: "/inventory/item" },
+      { id: "2-2", name: "BOM", route: "/inventory/bom" },
+    ],
+  },
+  {
+    id: "3",
+    name: "Purchase",
+    logo: "faCartShopping",
+  },
+  {
+    id: "4",
+    name: "Sales / Labour",
+    logo: "faMoneyCheckDollar",
+  },
+  {
+    id: "5",
+    name: "Sub-Contract",
+    logo: "faGg",
+  },
+  {
+    id: "6",
+    name: "Cash Flow",
+    logo: "faPiggyBank",
+  },
+];
+
+export const mainMenu1: Menu1[] = [
+  {
+    id: "1",
+    name: "Master",
+    logo: "faWarehouse",
+    submenus: [
+      {
+        id: "1-1",
+        name: "Admin",
+        route: "/master/admin",
+        submenus: [
+          {
+            id: "1-1-1",
+            name: "User",
+            route: "/admin/add-user",
+          },
+          { id: "1-1-2", name: "User Rights", route: "/admin/user-rights" },
+        ],
+      },
+      {
+        id: "1-2",
+        name: "Customers",
+        route: "/master/customers",
+        submenus: [
+          {
+            id: "1-2-1",
+            name: "Customer",
+          },
+          { id: "1-2-2", name: "Vendors" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "2",
+    name: "Inventory",
+    logo: "faBoxesStacked",
+    submenus: [
+      { id: "2-1", name: "Item", route: "/inventory/item" },
+      { id: "2-2", name: "BOM", route: "/inventory/bom" },
+    ],
+  },
+  {
+    id: "3",
+    name: "Purchase",
+    logo: "faCartShopping",
+  },
+  {
+    id: "4",
+    name: "Sales / Labour",
+    logo: "faMoneyCheckDollar",
+  },
+  {
+    id: "5",
+    name: "Sub-Contract",
+    logo: "faGg",
+  },
+  {
+    id: "6",
+    name: "Cash Flow",
+    logo: "faPiggyBank",
+  },
+];
+
+export const mainMenu2: Menu2[] = [
+  {
+    id: "1",
+    name: "Master",
+    logo: "faWarehouse",
+    submenus: [
+      {
+        id: "1-1",
         name: "Customers",
         route: "/master/customers",
         submenus: [
